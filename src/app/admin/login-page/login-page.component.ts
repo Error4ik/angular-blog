@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 export class LoginPageComponent implements OnInit {
 
   form: FormGroup;
+  submitButton = false;
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -27,10 +28,12 @@ export class LoginPageComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    this.submitButton = true;
     const user: User = {email: this.form.value.email, password: this.form.value.password};
 
     this.authService.login(user).subscribe(() => {
       this.form.reset();
+      this.submitButton = false;
       this.router.navigate(['/admin', 'dashboard']);
     });
   }

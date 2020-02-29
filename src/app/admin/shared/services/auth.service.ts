@@ -11,10 +11,16 @@ export class AuthService {
   }
 
   get token(): string {
-    return '';
+    const expiresDate = new Date(localStorage.getItem('tokenExpires'));
+    if (new Date() > expiresDate) {
+      this.logOut();
+      return null;
+    }
+    return localStorage.getItem('firebaseToken');
   }
 
   login(user: User): Observable<any> {
+    user.returnSecureToken = true;
     return this.http.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`,
       user)
@@ -22,14 +28,20 @@ export class AuthService {
   }
 
   logOut() {
-
+    this.setToken(null);
   }
 
   isAuthenticated(): boolean {
     return !!this.token;
   }
 
-  private setToken(response: FirebaseAuthResponse) {
-    console.log(response);
+  private setToken(response: FirebaseAuthResponse | null) {
+    if (response) {
+      const expiresDate = new Date(new Date().getTime() + +response.expiresIn * 1000);
+      localStorage.setItem('firebaseToken', response.idToken);
+      localStorage.setItem('tokenExpires', expiresDate.toString());
+    } else {
+      localStorage.clear();
+    }
   }
 }
