@@ -14,7 +14,7 @@ export class LoginPageComponent implements OnInit {
   form: FormGroup;
   submitButton = false;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
@@ -32,9 +32,12 @@ export class LoginPageComponent implements OnInit {
     const user: User = {email: this.form.value.email, password: this.form.value.password};
 
     this.authService.login(user).subscribe(() => {
-      this.form.reset();
-      this.submitButton = false;
-      this.router.navigate(['/admin', 'dashboard']);
-    });
+        this.form.reset();
+        this.router.navigate(['/admin', 'dashboard']);
+        this.submitButton = false;
+      },
+      () => {
+        this.submitButton = false;
+      });
   }
 }
