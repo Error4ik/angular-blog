@@ -1,33 +1,20 @@
-<div class="post">
-  <div class="header">
-    <h1>Post title</h1>
+<div *ngIf="post$ | async as post; else loading">
+  <div class="post">
+    <div class="header">
+      <h1>{{post.title}}</h1>
 
-    <button routerLink="/" class="btn btn-link">Main page</button>
-  </div>
-  <div class="info">
-    <strong>Author Alex.</strong>
-    <small>02.02.2009</small>
-  </div>
-  <div>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium asperiores autem commodi consectetur
-      culpa eaque excepturi fugiat fugit incidunt, maxime mollitia nam possimus quaerat qui quia saepe unde?
-      Amet animi blanditiis cupiditate ducimus et, expedita explicabo id iusto natus odit perspiciatis quia quod
-      rem sed sit tempore, veritatis voluptas voluptatibus.
-    </p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium asperiores autem commodi consectetur
-      culpa eaque excepturi fugiat fugit incidunt, maxime mollitia nam possimus quaerat qui quia saepe unde?
-      Amet animi blanditiis cupiditate ducimus et, expedita explicabo id iusto natus odit perspiciatis quia quod
-      rem sed sit tempore, veritatis voluptas voluptatibus.
-    </p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium asperiores autem commodi consectetur
-      culpa eaque excepturi fugiat fugit incidunt, maxime mollitia nam possimus quaerat qui quia saepe unde?
-      Amet animi blanditiis cupiditate ducimus et, expedita explicabo id iusto natus odit perspiciatis quia quod
-      rem sed sit tempore, veritatis voluptas voluptatibus.
-    </p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium asperiores autem commodi consectetur
-      culpa eaque excepturi fugiat fugit incidunt, maxime mollitia nam possimus quaerat qui quia saepe unde?
-      Amet animi blanditiis cupiditate ducimus et, expedita explicabo id iusto natus odit perspiciatis quia quod
-      rem sed sit tempore, veritatis voluptas voluptatibus.
-    </p>
+      <button routerLink="/" class="btn btn-link">Main page</button>
+    </div>
+    <div class="info">
+      <strong>{{post.author}}</strong>
+      <small>{{post.date | date: 'medium':null :'ru'}}</small>
+    </div>
+    <div>
+      <quill-view-html [content]="post.text"></quill-view-html>
+    </div>
   </div>
 </div>
+
+<ng-template #loading>
+  <p class="text-center">Post loading...</p>
+</ng-template>

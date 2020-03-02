@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {QuillModule} from 'ngx-quill-v2';
+import {HttpClientModule} from '@angular/common/http';
+import {QuillModule} from 'ngx-quill';
 
 @NgModule({
   imports: [HttpClientModule, QuillModule.forRoot()],
