@@ -31,4 +31,8 @@ export class PostsService {
         }));
       }));
   }
+
+  removePostById(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`${environment.firebaseUrl}/posts/${id}.json`);
+  }
 }
