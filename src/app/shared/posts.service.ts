@@ -43,6 +43,10 @@ export class PostsService {
       }));
   }
 
+  updatePost(post: Post): Observable<Post> {
+    return this.httpClient.patch<Post>(`${environment.firebaseUrl}/posts/${post.id}.json`, post);
+  }
+
   removePostById(id: string): Observable<void> {
     return this.httpClient.delete<void>(`${environment.firebaseUrl}/posts/${id}.json`);
   }
