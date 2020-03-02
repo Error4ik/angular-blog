@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {User} from '../../shared/interfaces';
 import {AuthService} from '../shared/services/auth.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {AlertService} from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-login-page',
@@ -15,7 +16,11 @@ export class LoginPageComponent implements OnInit {
   submitButton = false;
   message: string;
 
-  constructor(public authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private alertService: AlertService) {
   }
 
   ngOnInit() {
@@ -43,6 +48,7 @@ export class LoginPageComponent implements OnInit {
         this.form.reset();
         this.router.navigate(['/admin', 'dashboard']);
         this.submitButton = false;
+        this.alertService.success(`You are logged in as ${user.email}`);
       },
       () => {
         this.submitButton = false;
