@@ -20,4 +20,15 @@ export class PostsService {
         };
       }));
   }
+
+  getPosts(): Observable<Post[]> {
+    return this.httpClient.get(`${environment.firebaseUrl}/posts.json`)
+      .pipe(map((response: {[ket: string]: any}) => {
+        return Object.keys(response).map(key => ({
+          ...response[key],
+          id: key,
+          date: new Date(response[key].date)
+        }));
+      }));
+  }
 }
